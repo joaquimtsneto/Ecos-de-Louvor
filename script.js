@@ -2,30 +2,24 @@
 let todosHinos = [];
 let hinarioAtual = "canticos.json";
 
-// Carregar hinos ao iniciar
 document.addEventListener("DOMContentLoaded", () => {
   carregarHinos(hinarioAtual);
 
-  
-  const botoes = document.querySelectorAll(".buttons button");
-  botoes.forEach(btn => {
-    btn.classList.remove("active");
+  document.getElementById("btn-todos").addEventListener("click", () => {
+    exibirHinos(todosHinos);
+    atualizarBotoesAtivos("btn-todos");
   });
-  document.querySelectorAll(".buttons button").forEach(btn => {
 
-    btn.addEventListener("click", () => {
-    botoes.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-      if (btn.textContent === "Mostrar todos") {
-        exibirHinos(todosHinos);
-      } else if (btn.textContent === "Cânticos") {
-        hinarioAtual = "canticos.json";
-        carregarHinos(hinarioAtual);
-      } else if (btn.textContent === "Cantor Cristão") {
-        hinarioAtual = "cantor_cristao.json";
-        carregarHinos(hinarioAtual);
-      }
-    });
+  document.getElementById("btn-canticos").addEventListener("click", () => {
+    hinarioAtual = "canticos.json";
+    carregarHinos(hinarioAtual);
+    atualizarBotoesAtivos("btn-canticos");
+  });
+
+  document.getElementById("btn-cantor").addEventListener("click", () => {
+    hinarioAtual = "cantor_cristao.json";
+    carregarHinos(hinarioAtual);
+    atualizarBotoesAtivos("btn-cantor");
   });
 
   const searchInput = document.querySelector("input[type='text']");
@@ -37,6 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
     exibirHinos(resultados);
   });
 });
+
+function atualizarBotoesAtivos(ativoId) {
+  const botoes = document.querySelectorAll(".buttons button");
+  botoes.forEach(btn => {
+    btn.classList.remove("active", "todos-ativo");
+    if (btn.id === ativoId) {
+      btn.classList.add(ativoId === "btn-todos" ? "todos-ativo" : "active");
+    }
+  });
+}
 
 function carregarHinos(arquivo) {
   fetch(arquivo)
