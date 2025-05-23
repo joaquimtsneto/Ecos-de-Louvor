@@ -6,8 +6,16 @@ let hinarioAtual = "canticos.json";
 document.addEventListener("DOMContentLoaded", () => {
   carregarHinos(hinarioAtual);
 
+  
+  const botoes = document.querySelectorAll(".buttons button");
+  botoes.forEach(btn => {
+    btn.classList.remove("active");
+  });
   document.querySelectorAll(".buttons button").forEach(btn => {
+
     btn.addEventListener("click", () => {
+    botoes.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
       if (btn.textContent === "Mostrar todos") {
         exibirHinos(todosHinos);
       } else if (btn.textContent === "Cânticos") {
