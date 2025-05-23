@@ -5,6 +5,50 @@
   <meta charset="UTF-8">
   <title>Ecos de Louvor</title>
   <style>
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5em;
+    }
+    .filter-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: white;
+    }
+    .filter-buttons button.active {
+      background-color: #1e40af;
+      color: white;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      z-index: 1;
+      margin-top: 5px;
+    }
+    .dropdown-content div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .dropdown-content div:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
       background-color: #f3f4f6;
@@ -100,7 +144,61 @@
 <body>
   <h1>Ecos de Louvor</h1>
   <p class="subtitle">Uma voz que clama ao Senhor</p>
+<div class="filter-buttons">
+  <button id="btn-cantor">Cantor Cristão</button>
+  <button id="btn-canticos">Cânticos</button>
+  <div class="dropdown">
+    <button id="btn-temas">Temas ▾</button>
+    <div class="dropdown-content" id="temasDropdown"></div>
+  </div>
+  <button id="btn-todos">Mostrar todos</button>
+</div>
+
   <style>
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5em;
+    }
+    .filter-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: white;
+    }
+    .filter-buttons button.active {
+      background-color: #1e40af;
+      color: white;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      z-index: 1;
+      margin-top: 5px;
+    }
+    .dropdown-content div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .dropdown-content div:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
       background-color: #f3f4f6;
