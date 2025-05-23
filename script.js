@@ -11,19 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   botoes.forEach(btn => {
     btn.classList.remove("active");
   });
-  
-  const botoes = document.querySelectorAll(".buttons button");
-  botoes.forEach(btn => {
-    btn.classList.remove("active", "todos-ativo");
-  });
   document.querySelectorAll(".buttons button").forEach(btn => {
-
 
     btn.addEventListener("click", () => {
     botoes.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
       if (btn.textContent === "Mostrar todos") {
-    btn.classList.add('todos-ativo');
         exibirHinos(todosHinos);
       } else if (btn.textContent === "Cânticos") {
         hinarioAtual = "canticos.json";
