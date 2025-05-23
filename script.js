@@ -2,7 +2,6 @@
 let hinos = {};
 let atual = "Mostrar todos";
 
-// Carregar os dois arquivos e juntar os dados
 Promise.all([
   fetch('canticos.json').then(r => r.json()),
   fetch('cantor_cristao.json').then(r => r.json())
@@ -33,23 +32,35 @@ function render(filtro) {
   const lista = document.getElementById('lista');
   lista.innerHTML = '';
 
-  const ativos = atual === 'Mostrar todos'
-    ? Object.values(hinos).flat()
-    : hinos[atual] || [];
+  const grupos = atual === 'Mostrar todos' ? Object.entries(hinos) : [[atual, hinos[atual]]];
 
-  const resultado = ativos.filter(h =>
-    h.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
-    h.numero.toString().includes(filtro)
-  );
+  grupos.forEach(([grupo, listaHinos]) => {
+    const ativos = listaHinos.filter(h =>
+      h.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
+      h.numero.toString().includes(filtro)
+    );
 
-  resultado.forEach(h => {
-    const bloco = document.createElement('div');
-    bloco.style.border = '1px solid #ccc';
-    bloco.style.borderRadius = '0.5rem';
-    bloco.style.padding = '1rem';
-    bloco.style.marginBottom = '1rem';
-    bloco.innerHTML = `<h2 style="color:#1e40af; font-size:1.2rem;">${h.numero}. ${h.titulo}</h2><pre style="white-space:pre-wrap;">${h.letra}</pre>`;
-    lista.appendChild(bloco);
+    if (atual === 'Mostrar todos') {
+      const label = document.createElement('h3');
+      label.textContent = grupo;
+      label.style.color = '#333';
+      label.style.fontSize = '1.1rem';
+      label.style.marginTop = '1.5rem';
+      lista.appendChild(label);
+    }
+
+    ativos.forEach(h => {
+      const bloco = document.createElement('div');
+      bloco.style.border = '1px solid #ccc';
+      bloco.style.borderRadius = '0.5rem';
+      bloco.style.padding = '1rem';
+      bloco.style.marginBottom = '1rem';
+      bloco.innerHTML = `
+        <h2 style="color:#1e40af; font-size:1.2rem;">${h.numero}. ${h.titulo}</h2>
+        <pre style="white-space:pre-wrap; font-size:1rem; line-height:1.6;">${h.letra}</pre>
+      `;
+      lista.appendChild(bloco);
+    });
   });
 }
 
