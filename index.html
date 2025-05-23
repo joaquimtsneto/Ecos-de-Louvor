@@ -1,29 +1,59 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <title>Ecos de Louvor</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #1e40af;
+      font-size: 3rem;
+      margin-bottom: 0.2em;
+    }
+    p.subtitle {
+      font-style: italic;
+      margin-top: 0;
+      margin-bottom: 2em;
+      font-size: 1.2rem;
+    }
+    .buttons {
+      margin-bottom: 2em;
+    }
+    .buttons button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .buttons button:hover {
+      background-color: #f0f0f0;
+    }
+    input[type="text"] {
+      width: 60%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 style='font-size:2.5rem; color:#1e40af; text-align:center;'>Ecos de Louvor</h1>
-<p style='text-align:center; font-style:italic;'>Uma voz que clama ao Senhor</p>
-    <p>Uma voz que clama ao Senhor</p>
-    <div class="menu">
-      <label for="hinarioSelect">Hinário:</label>
-      <select id="hinarioSelect" onchange="carregarHinos()">
-        <option value="Cânticos">Cânticos</option>
-        <option value="Cantor Cristão">Cantor Cristão</option>
-      </select>
-    </div>
-    <input type="text" id="searchInput" placeholder="🔍 Buscar por número, título ou letra..." onkeyup="searchHinos()" />
-    <div id="temasContainer"></div>
-  </header>
-  <main id="hinosContainer"></main>
-  <div id="maisContainer" style="text-align:center; padding:2em;">
-    <button id="btnMais" onclick="mostrarMais()">+ Mostrar mais hinos</button>
+  <h1>Ecos de Louvor</h1>
+  <p class="subtitle">Uma voz que clama ao Senhor</p>
+  <div class="buttons">
+    <button>Mostrar todos</button>
+    <button>Cânticos</button>
+    <button>Cantor Cristão</button>
   </div>
+  <input type="text" placeholder="Buscar por título ou número..." />
   <script src="script.js"></script>
 </body>
 </html>
