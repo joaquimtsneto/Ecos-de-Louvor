@@ -4,8 +4,8 @@ let hinarioAtual = "canticos.json";
 let temaAtual = "";
 
 const temasPorHinario = {
-  "canticos.json": ['alegria', 'comunhão', 'esperança', 'fé', 'intimidade', 'louvor', 'redenção', 'santidade', 'segurança'],
-  "cantor_cristao.json": ['adoração', 'arrependimento', 'cruz', 'esperança', 'fidelidade', 'fé', 'gratidão', 'justiça', 'louvor', 'oração', 'redenção', 'santidade', 'segurança', 'soberania', 'trindade']
+  "canticos.json": ["adoração", "arrependimento", "batismo", "ceia do senhor", "cruz e sacrifício", "despertamento", "esperança", "evangelismo", "fé", "família", "gratidão", "igreja", "missões", "natal", "oração", "paz", "segunda vinda", "serviço cristão", "sofrimento e provações", "vitória em cristo"],
+  "cantor_cristao.json": ["adoração", "arrependimento", "batismo", "ceia do senhor", "cruz e sacrifício", "despertamento", "esperança", "evangelismo", "fé", "família", "gratidão", "igreja", "missões", "natal", "oração", "paz", "segunda vinda", "serviço cristão", "sofrimento e provações", "vitória em cristo"]
 };
 
 document.addEventListener("DOMContentLoaded", () => {
