@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1e40af" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" sizes="192x192" />
+  <title>Hinos: Que Tocam</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 800px; margin: auto; padding: 1rem; }
+    h1 { text-align: center; color: #1e40af; }
+    input { width: 100%; padding: 0.5rem; font-size: 1rem; margin-bottom: 1.5rem; }
+    .categorias button { margin: 0.25rem; }
+    .hino { border: 1px solid #ccc; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
+    .hino h2 { color: #1e40af; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .hino pre { white-space: pre-wrap; font-size: 1rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>Hinos: Que Tocam</h1>
+  <div id="botoes" class="categorias"></div>
+  <input type="text" id="busca" placeholder="Buscar por título, número ou trecho da letra..." />
+  <div id="lista"></div>
+  <script>
+    let todos = {};
+    let atual = "";
+    let todosHinos = [];
+
+    fetch('hinos_que_tocam.json')
+      .then(r => r.json())
+      .then(data => {
+        todos = data;
+        const botoes = Object.keys(data);
+        atual = botoes[0];
+        const container = document.getElementById('botoes');
+        botoes.forEach(nome => {
+          const btn = document.createElement('button');
+          btn.textContent = nome;
+          btn.onclick = () => { atual = nome; render(document.getElementById('busca').value); };
+          container.appendChild(btn);
+        });
+        render('');
+      });
+
+    function render(filtro) {
+      const el = document.getElementById('lista');
+      el.innerHTML = '';
+      const base = todos[atual] || [];
+      const resultados = base.filter(h =>
+        h.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
+        h.numero.toString().includes(filtro) ||
+        h.letra.toLowerCase().includes(filtro.toLowerCase())
+      );
+      resultados.forEach(h => {
+        const bloco = document.createElement('div');
+        bloco.className = 'hino';
+        bloco.innerHTML = `<h2>${h.numero}. ${h.titulo}</h2><pre>${h.letra}</pre>`;
+        el.appendChild(bloco);
+      });
+    }
+
+    document.getElementById('busca').addEventListener('input', e => render(e.target.value));
+  </script>
+</body>
+</html>
