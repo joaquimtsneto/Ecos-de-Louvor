@@ -2,26 +2,32 @@
 let hinos = {};
 let atual = "Mostrar todos";
 
-fetch('hinos_que_tocam.json')
-  .then(response => response.json())
-  .then(data => {
-    hinos = data;
-    const botoes = document.getElementById('botoes');
-    const categorias = ['Mostrar todos', ...Object.keys(hinos)];
+// Carregar os dois arquivos e juntar os dados
+Promise.all([
+  fetch('canticos.json').then(r => r.json()),
+  fetch('cantor_cristao.json').then(r => r.json())
+]).then(([canticos, cantorCristao]) => {
+  hinos = {
+    "Cânticos": canticos,
+    "Cantor Cristão": cantorCristao
+  };
 
-    categorias.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.textContent = cat;
-      btn.style.margin = '0.25rem';
-      btn.onclick = () => {
-        atual = cat;
-        render(document.getElementById('busca').value);
-      };
-      botoes.appendChild(btn);
-    });
+  const botoes = document.getElementById('botoes');
+  const categorias = ['Mostrar todos', ...Object.keys(hinos)];
 
-    render('');
+  categorias.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.textContent = cat;
+    btn.style.margin = '0.25rem';
+    btn.onclick = () => {
+      atual = cat;
+      render(document.getElementById('busca').value);
+    };
+    botoes.appendChild(btn);
   });
+
+  render('');
+});
 
 function render(filtro) {
   const lista = document.getElementById('lista');
