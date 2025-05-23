@@ -1,16 +1,15 @@
 
 let todosHinos = [];
-let hinosFiltrados = [];
 let hinarioAtual = "canticos.json";
 
-// Carregar os hinos ao iniciar
+// Carregar hinos ao iniciar
 document.addEventListener("DOMContentLoaded", () => {
   carregarHinos(hinarioAtual);
 
   document.querySelectorAll(".buttons button").forEach(btn => {
     btn.addEventListener("click", () => {
       if (btn.textContent === "Mostrar todos") {
-        carregarHinos(hinarioAtual);
+        exibirHinos(todosHinos);
       } else if (btn.textContent === "Cânticos") {
         hinarioAtual = "canticos.json";
         carregarHinos(hinarioAtual);
@@ -21,12 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.querySelector("input").addEventListener("input", (e) => {
-    const termo = e.target.value.toLowerCase();
-    const resultados = todosHinos.filter(h => 
-      h.numero.toLowerCase().includes(termo) ||
-      h.titulo.toLowerCase().includes(termo) ||
-      h.letra.toLowerCase().includes(termo)
+  const searchInput = document.querySelector("input[type='text']");
+  searchInput.addEventListener("input", () => {
+    const termo = searchInput.value.toLowerCase();
+    const resultados = todosHinos.filter(h =>
+      (h.numero + " - " + h.titulo).toLowerCase().includes(termo)
     );
     exibirHinos(resultados);
   });
@@ -37,7 +35,7 @@ function carregarHinos(arquivo) {
     .then(res => res.json())
     .then(data => {
       todosHinos = data.map(h => ({
-        numero: h.numero || h["número"] || "",
+        numero: (h.numero || h["número"] || "").toString(),
         titulo: h.titulo || h["título"] || "",
         letra: h.letra || ""
       }));
