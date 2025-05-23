@@ -1,0 +1,15 @@
+{
+  "name": "Ecos de Louvor",
+  "short_name": "EcosLouvor",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#1e40af",
+  "icons": [
+    {
+      "src": "icone_joaquim_final.png",
+      "sizes": "90x90",
+      "type": "image/png"
+    }
+  ]
+}
