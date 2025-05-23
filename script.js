@@ -1,67 +1,100 @@
 
-let hinos = {};
-let atual = "Mostrar todos";
+let hinos = [];
+let todosHinos = [];
+let temaSelecionado = "";
+let pagina = 0;
+const porPagina = 1000;
 
-Promise.all([
-  fetch('canticos.json').then(r => r.json()),
-  fetch('cantor_cristao.json').then(r => r.json())
-]).then(([canticos, cantorCristao]) => {
-  hinos = {
-    "Cânticos": canticos,
-    "Cantor Cristão": cantorCristao
-  };
-
-  const botoes = document.getElementById('botoes');
-  const categorias = ['Mostrar todos', ...Object.keys(hinos)];
-
-  categorias.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.textContent = cat;
-    btn.style.margin = '0.25rem';
-    btn.onclick = () => {
-      atual = cat;
-      render(document.getElementById('busca').value);
-    };
-    botoes.appendChild(btn);
-  });
-
-  render('');
-});
-
-function render(filtro) {
-  const lista = document.getElementById('lista');
-  lista.innerHTML = '';
-
-  const grupos = atual === 'Mostrar todos' ? Object.entries(hinos) : [[atual, hinos[atual]]];
-
-  grupos.forEach(([grupo, listaHinos]) => {
-    const ativos = listaHinos.filter(h =>
-      h.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
-      h.numero.toString().includes(filtro)
-    );
-
-    if (atual === 'Mostrar todos') {
-      const label = document.createElement('h3');
-      label.textContent = grupo;
-      label.style.color = '#333';
-      label.style.fontSize = '1.1rem';
-      label.style.marginTop = '1.5rem';
-      lista.appendChild(label);
-    }
-
-    ativos.forEach(h => {
-      const bloco = document.createElement('div');
-      bloco.style.border = '1px solid #ccc';
-      bloco.style.borderRadius = '0.5rem';
-      bloco.style.padding = '1rem';
-      bloco.style.marginBottom = '1rem';
-      bloco.innerHTML = `
-        <h2 style="color:#1e40af; font-size:1.2rem;">${h.numero}. ${h.titulo}</h2>
-        <pre style="white-space:pre-wrap; font-size:1rem; line-height:1.6;">${h.letra}</pre>
-      `;
-      lista.appendChild(bloco);
+function carregarHinos() {
+  const hinario = document.getElementById("hinarioSelect").value;
+  mostrarCarregando();
+  fetch(hinario === "Cânticos" ? "canticos.json" : "cantor_cristao.json")
+    .then(response => response.json())
+    .then(data => {
+      todosHinos = data.map(h => ({
+        numero: h.numero || h["número"] || "",
+        titulo: h.titulo || h["título"] || "",
+        categoria: h.categoria || "",
+        letra: h.letra || "",
+        tema: h.tema || ""
+      }));
+      temaSelecionado = "";
+      document.getElementById("searchInput").value = "";
+      gerarTemas(todosHinos);
+      aplicarFiltros();
     });
+}
+
+function mostrarCarregando() {
+  const container = document.getElementById('hinosContainer');
+  container.innerHTML = '<p style="text-align:center;font-size:1.2em;">⏳ Carregando hinos...</p>';
+}
+
+function gerarTemas(hinos) {
+  const temasSet = new Set();
+  hinos.forEach(h => {
+    if (h.tema) {
+      h.tema.split(',').forEach(t => temasSet.add(t.trim()));
+    }
+  });
+  const temas = Array.from(temasSet).sort();
+  const container = document.getElementById('temasContainer');
+  container.innerHTML = '';
+  temas.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'tema-btn' + (t === temaSelecionado ? ' ativo' : '');
+    btn.textContent = t;
+    btn.onclick = () => {
+      temaSelecionado = (temaSelecionado === t ? "" : t);
+      gerarTemas(todosHinos);
+      aplicarFiltros();
+    };
+    container.appendChild(btn);
   });
 }
 
-document.getElementById('busca').addEventListener('input', e => render(e.target.value));
+function searchHinos() {
+  temaSelecionado = "";
+  gerarTemas(todosHinos);
+  aplicarFiltros();
+}
+
+function aplicarFiltros() {
+  const termo = document.getElementById('searchInput').value.toLowerCase();
+  let filtrados = todosHinos;
+
+  if (temaSelecionado) {
+    filtrados = filtrados.filter(h => (h.tema || "").toLowerCase().includes(temaSelecionado.toLowerCase()));
+  }
+
+  if (termo) {
+    filtrados = filtrados.filter(h =>
+      (h.numero || "").toLowerCase().includes(termo) ||
+      (h.titulo || "").toLowerCase().includes(termo) ||
+      (h.letra || "").toLowerCase().includes(termo)
+    );
+  }
+
+  hinos = filtrados;
+  pagina = 0;
+  document.getElementById("hinosContainer").innerHTML = "";
+  mostrarMais();
+}
+
+function mostrarMais() {
+  const container = document.getElementById('hinosContainer');
+  const inicio = pagina * porPagina;
+  const fim = inicio + porPagina;
+  const trecho = hinos.slice(inicio, fim);
+  trecho.forEach(hino => {
+    const div = document.createElement('div');
+    div.className = 'hino';
+    const letraFormatada = (hino.letra || "").replace(/\n/g, '<br>');
+    div.innerHTML = `<h2>${hino.numero}. ${hino.titulo}</h2><p>${letraFormatada}</p>`;
+    container.appendChild(div);
+  });
+  pagina++;
+  document.getElementById("btnMais").style.display = (fim >= hinos.length) ? "none" : "inline-block";
+}
+
+carregarHinos();

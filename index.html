@@ -1,21 +1,29 @@
-
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1e40af">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png" sizes="192x192">
   <title>Ecos de Louvor</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1 style="font-size:2.5rem; color:#1e40af; text-align:center;">Ecos de Louvor</h1>
-  <p style="text-align:center; font-style:italic;">Uma voz que clama ao Senhor</p>
-  <div id="botoes" class="categorias" style="text-align:center; margin-top:20px;"></div>
-  <div style="text-align:center; margin:20px;"><input type="text" id="busca" placeholder="Buscar por título ou número..." style="padding:0.5rem; font-size:1rem; width:80%; max-width:400px;"></div>
-  <div id="lista" style="max-width:800px; margin:auto;"></div>
+  <header>
+    <h1 style='font-size:2.5rem; color:#1e40af; text-align:center;'>Ecos de Louvor</h1>
+<p style='text-align:center; font-style:italic;'>Uma voz que clama ao Senhor</p>
+    <p>Uma voz que clama ao Senhor</p>
+    <div class="menu">
+      <label for="hinarioSelect">Hinário:</label>
+      <select id="hinarioSelect" onchange="carregarHinos()">
+        <option value="Cânticos">Cânticos</option>
+        <option value="Cantor Cristão">Cantor Cristão</option>
+      </select>
+    </div>
+    <input type="text" id="searchInput" placeholder="🔍 Buscar por número, título ou letra..." onkeyup="searchHinos()" />
+    <div id="temasContainer"></div>
+  </header>
+  <main id="hinosContainer"></main>
+  <div id="maisContainer" style="text-align:center; padding:2em;">
+    <button id="btnMais" onclick="mostrarMais()">+ Mostrar mais hinos</button>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
