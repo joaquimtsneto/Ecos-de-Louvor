@@ -65,12 +65,5 @@ function exibirHinos(lista) {
   container.innerHTML = "";
   lista.forEach(h => {
     const bloco = document.createElement("div");
-    bloco.style.margin = "20px auto";
-    bloco.style.maxWidth = "700px";
-    bloco.style.textAlign = "left";
-    bloco.style.borderBottom = "1px solid #ccc";
-    bloco.style.paddingBottom = "10px";
-    bloco.innerHTML = `<h3>${h.numero} - ${h.titulo}</h3><pre style="white-space:pre-wrap">${h.letra}</pre>`;
-    container.appendChild(bloco);
-  });
-}
+    bloco.className = "hino-bloco";
+    
