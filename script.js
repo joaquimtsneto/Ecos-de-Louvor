@@ -12,16 +12,6 @@ function filtrarHinos(termo, listaHinos) {
   return listaHinos.filter(h => {
     const titulo = h.titulo?.toLowerCase() || "";
     const letra = h.letra?.toLowerCase() || "";
-    const primeiraLinha = letra.split('
-')[0] || "";
-    return titulo.includes(termoLower) || primeiraLinha.includes(termoLower);
-  });
-}
-
-  // Caso contrário, procura no título ou na primeira estrofe
-  return listaHinos.filter(h => {
-    const titulo = h.titulo?.toLowerCase() || "";
-    const letra = h.letra?.toLowerCase() || "";
     const primeiraLinha = letra.split('\n')[0] || "";
     return titulo.includes(termoLower) || primeiraLinha.includes(termoLower);
   });
@@ -38,7 +28,12 @@ const temasPorHinario = {
   "cantor_cristao.json": ["adoração", "arrependimento", "batismo", "ceia do senhor", "cruz e sacrifício", "despertamento", "esperança", "evangelismo", "fé", "família", "gratidão", "igreja", "missões", "natal", "oração", "paz", "segunda vinda", "serviço cristão", "sofrimento e provações", "vitória em cristo"]
 };
 
-
+document.addEventListener("DOMContentLoaded", () => {
+  carregarHinos(hinarioAtual);
+  configurarBotoes();
+  configurarBusca();
+  configurarDropdown();
+});
 
 function configurarBotoes() {
   document.getElementById("btn-canticos").addEventListener("click", () => {
@@ -146,22 +141,3 @@ function exibirHinos(lista) {
     container.appendChild(bloco);
   });
 }
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const campoBusca = document.getElementById("campo-busca");
-  campoBusca.addEventListener("input", (e) => {
-    const termo = e.target.value;
-    const lista = filtrarHinos(termo, listaHinos);
-    exibirHinos(lista);
-  });
-
-  // Mostrar todos os hinos ao iniciar
-  const lista = filtrarHinos("", listaHinos);
-  exibirHinos(lista);
-});
