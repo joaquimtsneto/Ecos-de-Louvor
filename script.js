@@ -1,3 +1,23 @@
+// FUNÇÃO DE FILTRAGEM MELHORADA
+function filtrarHinos(termo, listaHinos) {
+  const termoLower = termo.toLowerCase().trim();
+
+  // Se for número exato, retorna diretamente
+  if (!isNaN(termoLower) && termoLower !== "") {
+    const numero = parseInt(termoLower, 10);
+    return listaHinos.filter(h => h.numero === numero);
+  }
+
+  // Caso contrário, procura no título ou na primeira estrofe
+  return listaHinos.filter(h => {
+    const titulo = h.titulo?.toLowerCase() || "";
+    const letra = h.letra?.toLowerCase() || "";
+    const primeiraLinha = letra.split('\n')[0] || "";
+    return titulo.includes(termoLower) || primeiraLinha.includes(termoLower);
+  });
+}
+
+
 
 let todosHinos = [];
 let hinarioAtual = "canticos.json";
