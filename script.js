@@ -12,6 +12,16 @@ function filtrarHinos(termo, listaHinos) {
   return listaHinos.filter(h => {
     const titulo = h.titulo?.toLowerCase() || "";
     const letra = h.letra?.toLowerCase() || "";
+    const primeiraLinha = letra.split('
+')[0] || "";
+    return titulo.includes(termoLower) || primeiraLinha.includes(termoLower);
+  });
+}
+
+  // Caso contrário, procura no título ou na primeira estrofe
+  return listaHinos.filter(h => {
+    const titulo = h.titulo?.toLowerCase() || "";
+    const letra = h.letra?.toLowerCase() || "";
     const primeiraLinha = letra.split('\n')[0] || "";
     return titulo.includes(termoLower) || primeiraLinha.includes(termoLower);
   });
