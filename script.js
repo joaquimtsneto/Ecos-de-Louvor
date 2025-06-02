@@ -1,3 +1,23 @@
+
+// FAVORITOS
+const favoritosKey = "favoritos_hinos";
+function getFavoritos() {
+  return JSON.parse(localStorage.getItem(favoritosKey) || "[]");
+}
+function toggleFavorito(numero) {
+  let favoritos = getFavoritos();
+  if (favoritos.includes(numero)) {
+    favoritos = favoritos.filter(n => n !== numero);
+  } else {
+    favoritos.push(numero);
+  }
+  localStorage.setItem(favoritosKey, JSON.stringify(favoritos));
+  renderHinos(listaAtual); // Atualiza a visualização
+}
+function isFavorito(numero) {
+  return getFavoritos().includes(numero);
+}
+
 // FUNÇÃO DE FILTRAGEM MELHORADA
 function filtrarHinos(termo, listaHinos) {
   const termoLower = termo.toLowerCase().trim();
@@ -141,3 +161,9 @@ function exibirHinos(lista) {
     container.appendChild(bloco);
   });
 }
+
+document.getElementById('favoritosBtn').addEventListener('click', () => {
+  const favoritos = getFavoritos();
+  const filtrados = listaAtual.filter(h => favoritos.includes(parseInt(h.número)));
+  renderHinos(filtrados);
+});
