@@ -167,3 +167,35 @@ document.getElementById('favoritosBtn').addEventListener('click', () => {
   const filtrados = listaAtual.filter(h => favoritos.includes(parseInt(h.número)));
   renderHinos(filtrados);
 });
+
+
+// Código modificado para suportar cifras
+
+function renderHino(hino) {
+  const container = document.getElementById("letra-hino");
+  container.innerHTML = "";
+
+  const titulo = document.createElement("h2");
+  titulo.textContent = `${hino.número} - ${hino.título}`;
+  container.appendChild(titulo);
+
+  let usandoCifras = false;
+  const letra = document.createElement("pre");
+  letra.style.whiteSpace = "pre-wrap";
+  letra.style.fontFamily = "monospace";
+  letra.textContent = hino.letra;
+
+  if (hino.letra_cifrada) {
+    const botao = document.createElement("button");
+    botao.textContent = "Ver com cifras";
+    botao.style.marginBottom = "10px";
+    botao.onclick = () => {
+      usandoCifras = !usandoCifras;
+      letra.textContent = usandoCifras ? hino.letra_cifrada : hino.letra;
+      botao.textContent = usandoCifras ? "Ver sem cifras" : "Ver com cifras";
+    };
+    container.appendChild(botao);
+  }
+
+  container.appendChild(letra);
+}
