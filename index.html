@@ -1,787 +1,438 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ecos de Louvor</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e40af">
-  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+#hinosContainer > div {
+  max-width: 600px;
+  margin: 8px auto;
+  font-family: 'Helvetica Neue', sans-serif;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+}
+#hinosContainer pre {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  margin: 0;
+}
 
-    :root {
-      --primary-color: #1e40af;
-      --secondary-color: #3b82f6;
-      --background-color: #DBD7C5;
-      --card-background: #ffffff;
-      --text-primary: #1f2937;
-      --text-secondary: #6b7280;
-      --border-color: #e5e7eb;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+h1.title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+.subtitle {
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'Helvetica Neue', sans-serif;
+  max-width: 650px;
+  margin: 0 auto;
+  display: block;
+}
+input[type="text"] {
+  width: 100%;
+  max-width: 650px;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+#hinosContainer > div {
+  max-width: 650px;
+  margin: 12px auto;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1em 0;
+}
+input[type="text"] {
+  width: 100%;
+  max-width: 700px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+h1.title {
+  font-size: 2rem;
+  margin-bottom: 0.3em;
+}
+.subtitle {
+  font-size: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+}
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5em;
+    }
+    .filter-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: white;
+    }
+    .filter-buttons button.active {
+      background-color: #1e40af;
+      color: white;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      z-index: 1;
+      margin-top: 5px;
+    }
+    .dropdown-content div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .dropdown-content div:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown.show .dropdown-content {
+      display: block;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-primary);
-      line-height: 1.6;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 50px;
     }
-
-    .header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .logo {
-      max-width: 300px;
-      height: auto;
-      margin-bottom: 1rem;
+    #hinosContainer > div {
+      background-color: white;
       border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 700px;
+      text-align: left;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
     }
-
-    .app-title {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    #hinosContainer h3 {
+      color: #1e40af;
+      margin-top: 0;
     }
-
-    .app-subtitle {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      font-style: italic;
-    }
-
-    .author {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .main-nav {
-      background: white;
-      box-shadow: var(--shadow);
-      border-radius: 12px;
-      margin: 2rem auto;
-      max-width: 800px;
-      overflow: hidden;
-    }
-
-    .nav-buttons {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      flex: 1;
-      min-width: 150px;
-      padding: 1rem;
-      border: none;
-      background: white;
-      color: var(--text-primary);
+    #hinosContainer pre {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-right: 1px solid var(--border-color);
-    }
-
-    .nav-btn:last-child {
-      border-right: none;
-    }
-
-    .nav-btn:hover {
-      background: #f8fafc;
-      transform: translateY(-2px);
-    }
-
-    .nav-btn.active {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .search-section {
-      margin: 2rem 0;
-      text-align: center;
-    }
-
-    .search-input {
-      width: 100%;
-      max-width: 600px;
-      padding: 1rem;
-      font-size: 1.1rem;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      background: white;
-      transition: border-color 0.3s ease;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-    }
-
-    .content-area {
-      margin: 2rem 0;
-      min-height: 400px;
-    }
-
-    .hymn-card {
-      background: var(--card-background);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease;
-    }
-
-    .hymn-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .hymn-title {
-      color: var(--primary-color);
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .hymn-lyrics {
       white-space: pre-wrap;
-      line-height: 1.8;
-      font-size: 1rem;
-      color: var(--text-primary);
+      margin: 0;
     }
 
-    .favorite-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: color 0.3s ease;
-    }
-
-    .favorite-btn.active {
-      color: #ef4444;
-    }
-
-    /* Bible Section Styles */
-    .bible-section {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 2rem;
-    }
-
-    .bible-controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .select-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .select-group label {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .bible-select {
-      padding: 0.75rem;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 1rem;
-      background: white;
-    }
-
-    .bible-verse {
-      background: #f8fafc;
-      border-left: 4px solid var(--primary-color);
-      padding: 1.5rem;
-      margin: 1rem 0;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .verse-reference {
+    .buttons button.todos-ativo {
+      background-color: #e5e7eb;
+      color: #111827;
       font-weight: bold;
-      color: var(--primary-color);
-      margin-bottom: 0.5rem;
+      box-shadow: inset 0 0 0 1px #d1d5db;
     }
 
-    .verse-text {
-      font-size: 1.1rem;
-      line-height: 1.8;
+    .buttons button.active {
+      background-color: #1e40af;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
     }
 
-    .loading {
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    h3 {
+      color: #1e40af;
+      font-weight: bold;
+    }
+    pre {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
       text-align: center;
-      padding: 2rem;
-      color: var(--text-secondary);
+      padding: 50px;
     }
-
-    .error {
-      background: #fee2e2;
-      color: #dc2626;
-      padding: 1rem;
-      border-radius: 8px;
-      margin: 1rem 0;
+    h1 {
+      color: #1e40af;
+      font-size: 3rem;
+      margin-bottom: 0.2em;
     }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .app-title {
-        font-size: 2rem;
-      }
-      
-      .nav-btn {
-        min-width: 120px;
-        padding: 0.75rem 0.5rem;
-        font-size: 0.9rem;
-      }
-      
-      .search-input {
-        font-size: 1rem;
-      }
-      
-      .bible-controls {
-        grid-template-columns: 1fr;
-      }
+    p.subtitle {
+      font-style: italic;
+      margin-top: 0;
+      margin-bottom: 2em;
+      font-size: 1.2rem;
     }
-
-    /* Filter buttons for themes */
-    .theme-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1rem 0;
-      justify-content: center;
+    .buttons {
+      margin-bottom: 2em;
     }
-
-    .theme-btn {
-      padding: 0.5rem 1rem;
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      font-size: 0.9rem;
+    .buttons button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      font-size: 1rem;
     }
-
-    .theme-btn:hover {
-      background: var(--primary-color);
-      color: white;
+    .buttons button:hover {
+      background-color: #f0f0f0;
     }
-
-    .theme-btn.active {
-      background: var(--primary-color);
-      color: white;
+    input[type="text"] {
+      width: 60%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
   </style>
-</head>
-<body>
-  <header class="header">
-    <div class="container">
-      <div class="logo-placeholder" style="width: 300px; height: 100px; background: rgba(255,255,255,0.2); margin: 0 auto 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-        Logo Ecos de Louvor
-      </div>
-      <h1 class="app-title">Ecos de Louvor</h1>
-      <p class="app-subtitle">Uma voz que clama ao Senhor</p>
-      <p class="author">por Pr. Joaquim Teixeira</p>
-    </div>
-  </header>
 
-  <div class="container">
-    <nav class="main-nav">
-      <div class="nav-buttons">
-        <button class="nav-btn active" data-section="hinos">📖 Hinários</button>
-        <button class="nav-btn" data-section="biblia">✝️ Bíblia</button>
-        <button class="nav-btn" data-section="favoritos">❤️ Favoritos</button>
-      </div>
-    </nav>
-
-    <div class="search-section">
-      <input type="text" class="search-input" placeholder="Buscar hinos por número, título ou primeira linha..." id="searchInput">
-    </div>
-
-    <!-- Hinários Section -->
-    <div id="hinos-section" class="content-area">
-      <div class="main-nav" style="margin: 1rem auto;">
-        <div class="nav-buttons">
-          <button class="nav-btn active" data-hinario="canticos">Cânticos</button>
-          <button class="nav-btn" data-hinario="cantor">Cantor Cristão</button>
-          <button class="nav-btn" data-hinario="todos">Mostrar Todos</button>
-        </div>
-      </div>
-
-      <div class="theme-filters" id="themeFilters">
-        <!-- Temas serão inseridos dinamicamente -->
-      </div>
-
-      <div id="hinosContainer">
-        <!-- Hinos serão inseridos aqui -->
-      </div>
-    </div>
-
-    <!-- Bíblia Section -->
-    <div id="biblia-section" class="content-area" style="display: none;">
-      <div class="bible-section">
-        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem; text-align: center;">📖 Bíblia Sagrada Online</h2>
-        
-        <div class="bible-controls">
-          <div class="select-group">
-            <label for="languageSelect">Idioma:</label>
-            <select id="languageSelect" class="bible-select">
-              <option value="pt">Português (Brasil)</option>
-              <option value="es">Español</option>
-            </select>
-          </div>
-          
-          <div class="select-group">
-            <label for="versionSelect">Versão:</label>
-            <select id="versionSelect" class="bible-select">
-              <option value="almeida">Almeida Corrigida Fiel</option>
-              <option value="nvi">Nova Versão Internacional</option>
-            </select>
-          </div>
-          
-          <div class="select-group">
-            <label for="bookSelect">Livro:</label>
-            <select id="bookSelect" class="bible-select">
-              <option value="">Selecione um livro...</option>
-            </select>
-          </div>
-          
-          <div class="select-group">
-            <label for="chapterSelect">Capítulo:</label>
-            <select id="chapterSelect" class="bible-select">
-              <option value="">Selecione um capítulo...</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="search-section">
-          <input type="text" class="search-input" placeholder="Buscar versículos... (ex: João 3:16)" id="verseSearch">
-        </div>
-
-        <div id="bibleContent">
-          <div class="bible-verse">
-            <div class="verse-reference">João 3:16</div>
-            <div class="verse-text">Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Favoritos Section -->
-    <div id="favoritos-section" class="content-area" style="display: none;">
-      <div class="bible-section">
-        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem; text-align: center;">❤️ Seus Hinos Favoritos</h2>
-        <div id="favoritosContainer">
-          <!-- Favoritos serão inseridos aqui -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Dados simulados dos hinários
-    const hinosData = {
-      canticos: [
-        {
-          numero: 1,
-          titulo: "Santo! Santo! Santo!",
-          letra: "Santo! Santo! Santo! Senhor Deus onipotente!\nCedo de manhã Te louvamos com fervor;\nSanto! Santo! Santo! Misericordioso e forte!\nDeus em três pessoas, bendita Trindade!\n\nSanto! Santo! Santo! Os salvos e os anjos Te adoram,\nProstrando-se ante o trono do grande Eu Sou;\nQuerubins e serafins Te glorificam,\nPois Tu sempre foste e sempre hás de ser.",
-          tema: "adoração"
-        },
-        {
-          numero: 2,
-          titulo: "Vem, Tu Fons de Toda Bênção",
-          letra: "Vem, Tu fons de toda bênção,\nAfina meu coração a Te cantar;\nGraça, como fonte mansa,\nCante eu sempre Teu amor.\n\nAqui levanto o meu Ebenézer,\nTé aqui Senhor me socorreu;\nE espero que a Tua bondade,\nComo o bem supremo, me conduzirá.\n\nOh! Prende com graça forte\nEste coração volúvel ao Senhor;\nPropenso é a Te deixar-me,\nPropenso a deixar o Deus que mais amou.",
-          tema: "gratidão"
-        },
-        {
-          numero: 3,
-          titulo: "Jesus Me Ama",
-          letra: "Cristo me ama, bem o sei,\nSua Palavra me falou;\nQue as crianças podem vir a Ele,\nPois delas é o Seu reino.\n\nSim, Cristo me ama!\nSim, Cristo me ama!\nSim, Cristo me ama!\nA Bíblia diz assim.\n\nCristo me ama! Morreu por mim,\nE no céu me receberá;\nEle abriu a porta da vida eterna,\nE minhas culpas perdoará.",
-          tema: "fé"
-        }
-      ],
-      cantor: [
-        {
-          numero: 1,
-          titulo: "Deus Vos Guarde",
-          letra: "Deus vos guarde sob Suas asas,\nSob Sua graça e proteção;\nDeus vos guarde em suas casas,\nNa mais doce comunhão.\n\nDeus vos guarde! Deus vos guarde!\nPor Sua graça e proteção!\nDeus vos guarde! Deus vos guarde!\nNa mais santa comunhão!",
-          tema: "paz"
-        },
-        {
-          numero: 2,
-          titulo: "Mais Perto Quero Estar",
-          letra: "Mais perto quero estar, meu Deus, de Ti,\nAinda que seja dor que me aproxime assim;\nSempre hei de suplicar: mais perto quero estar,\nMais perto quero estar, meu Deus, de Ti!\n\nSe como Jacó, meu leito for\nPedra de Betel, por Teu amor,\nEm sonhos hei de ver, suplicar e crer:\nMais perto quero estar, meu Deus, de Ti!",
-          tema: "oração"
-        }
-      ]
-    };
-
-    // Dados da Bíblia
-    const bibleBooks = {
-      pt: [
-        {name: "Gênesis", chapters: 50, abbr: "gn"},
-        {name: "Êxodo", chapters: 40, abbr: "ex"},
-        {name: "Salmos", chapters: 150, abbr: "sl"},
-        {name: "Provérbios", chapters: 31, abbr: "pv"},
-        {name: "Mateus", chapters: 28, abbr: "mt"},
-        {name: "João", chapters: 21, abbr: "jo"},
-        {name: "Romanos", chapters: 16, abbr: "rm"},
-        {name: "1 Coríntios", chapters: 16, abbr: "1co"}
-      ],
-      es: [
-        {name: "Génesis", chapters: 50, abbr: "gn"},
-        {name: "Éxodo", chapters: 40, abbr: "ex"},
-        {name: "Salmos", chapters: 150, abbr: "sl"},
-        {name: "Proverbios", chapters: 31, abbr: "pv"},
-        {name: "Mateo", chapters: 28, abbr: "mt"},
-        {name: "Juan", chapters: 21, abbr: "jn"},
-        {name: "Romanos", chapters: 16, abbr: "rm"},
-        {name: "1 Corintios", chapters: 16, abbr: "1co"}
-      ]
-    };
-
-    // Temas disponíveis
-    const themes = ["adoração", "arrependimento", "batismo", "ceia do senhor", "cruz e sacrifício", "esperança", "evangelismo", "fé", "família", "gratidão", "igreja", "missões", "natal", "oração", "paz", "segunda vinda", "serviço cristão", "vitória em cristo"];
-
-    // Estado da aplicação
-    let currentSection = 'hinos';
-    let currentHinario = 'canticos';
-    let currentTheme = '';
-    let allHinos = [...hinosData.canticos, ...hinosData.cantor];
-    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeApp();
-      setupEventListeners();
-      loadHinos();
-      setupBible();
+<link rel="manifest" href="manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("service-worker.js");
     });
+  }
+</script>
 
-    function initializeApp() {
-      // Service Worker
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js');
-      }
+</head>
+<body style="background-color: #DBD7C5 !important;">
+<header class="logo-container" style="text-align: center; margin-top: 20px;">
+  <img src="img/Ecos de Louvor.png"
+       alt="Ecos de Louvor - Uma voz que clama ao Senhor"
+       style="max-width: 100%; height: auto;" />
+  <noscript>
+    <h1 style="font-size: 2em; color: #1a3d8f;">Ecos de Louvor<br>
+      <span style="font-size: 1.2em; font-style: italic;">Uma voz que clama ao Senhor</span>
+    </h1>
+  </noscript>
+</header>
+
+
+
+
+
+
+
+<div class="container">
+  
+  
+<div style="text-align: center; margin-top: 10px;">
+  
+  <p style="font-size: 0.9rem; color: #444; margin-top: 5px;">por Pr. Joaquim Teixeira</p>
+</div>
+
+<div class="filter-buttons">
+  <button id="btn-cantor">Cantor Cristão</button>
+  <button id="btn-canticos">Cânticos</button>
+  <div class="dropdown">
+    <button id="btn-temas">Temas ▾</button>
+    <div class="dropdown-content" id="temasDropdown"></div>
+  </div>
+  <button id="btn-todos">Mostrar todos</button>
+</div>
+
+  <style>
+#hinosContainer > div {
+  max-width: 600px;
+  margin: 8px auto;
+  font-family: 'Helvetica Neue', sans-serif;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+}
+#hinosContainer pre {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.container {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+h1.title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+.subtitle {
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'Helvetica Neue', sans-serif;
+  max-width: 650px;
+  margin: 0 auto;
+  display: block;
+}
+input[type="text"] {
+  width: 100%;
+  max-width: 650px;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+#hinosContainer > div {
+  max-width: 650px;
+  margin: 12px auto;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1em 0;
+}
+input[type="text"] {
+  width: 100%;
+  max-width: 700px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+h1.title {
+  font-size: 2rem;
+  margin-bottom: 0.3em;
+}
+.subtitle {
+  font-size: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+}
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5em;
+    }
+    .filter-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: white;
+    }
+    .filter-buttons button.active {
+      background-color: #1e40af;
+      color: white;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      z-index: 1;
+      margin-top: 5px;
+    }
+    .dropdown-content div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .dropdown-content div:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown.show .dropdown-content {
+      display: block;
     }
 
-    function setupEventListeners() {
-      // Navegação principal
-      document.querySelectorAll('.nav-btn[data-section]').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const section = this.dataset.section;
-          switchSection(section);
-          updateActiveButton(this, '.nav-btn[data-section]');
-        });
-      });
-
-      // Navegação hinários
-      document.querySelectorAll('.nav-btn[data-hinario]').forEach(btn => {
-        btn.addEventListener('click', function() {
-          currentHinario = this.dataset.hinario;
-          loadHinos();
-          updateActiveButton(this, '.nav-btn[data-hinario]');
-        });
-      });
-
-      // Busca
-      document.getElementById('searchInput').addEventListener('input', function() {
-        searchHinos(this.value);
-      });
-
-      // Busca bíblica
-      document.getElementById('verseSearch').addEventListener('input', function() {
-        searchBibleVerse(this.value);
-      });
-
-      // Controles da Bíblia
-      document.getElementById('languageSelect').addEventListener('change', updateBibleBooks);
-      document.getElementById('bookSelect').addEventListener('change', updateChapters);
-      document.getElementById('chapterSelect').addEventListener('change', loadChapter);
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 50px;
+    }
+    #hinosContainer > div {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 700px;
+      text-align: left;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    #hinosContainer h3 {
+      color: #1e40af;
+      margin-top: 0;
+    }
+    #hinosContainer pre {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+      white-space: pre-wrap;
+      margin: 0;
     }
 
-    function switchSection(section) {
-      currentSection = section;
-      
-      // Esconder todas as seções
-      document.querySelectorAll('[id$="-section"]').forEach(el => {
-        el.style.display = 'none';
-      });
-      
-      // Mostrar seção atual
-      document.getElementById(section + '-section').style.display = 'block';
-      
-      if (section === 'favoritos') {
-        loadFavorites();
-      }
+    .buttons button.todos-ativo {
+      background-color: #e5e7eb;
+      color: #111827;
+      font-weight: bold;
+      box-shadow: inset 0 0 0 1px #d1d5db;
     }
 
-    function updateActiveButton(activeBtn, selector) {
-      document.querySelectorAll(selector).forEach(btn => {
-        btn.classList.remove('active');
-      });
-      activeBtn.classList.add('active');
+    .buttons button.active {
+      background-color: #1e40af;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
     }
-
-    function loadHinos() {
-      let hinosToShow = [];
-      
-      if (currentHinario === 'todos') {
-        hinosToShow = allHinos;
-      } else {
-        hinosToShow = hinosData[currentHinario] || [];
-      }
-
-      if (currentTheme) {
-        hinosToShow = hinosToShow.filter(h => h.tema === currentTheme);
-      }
-
-      renderHinos(hinosToShow);
-      updateThemeFilters();
+    .buttons button.todos-ativo {
+      background-color: #e5e7eb;
+      color: #111827;
+      font-weight: bold;
+      box-shadow: inset 0 0 0 1px #d1d5db;
     }
+</style>
 
-    function updateThemeFilters() {
-      const container = document.getElementById('themeFilters');
-      container.innerHTML = '';
-
-      // Botão "Todos"
-      const allBtn = document.createElement('button');
-      allBtn.className = 'theme-btn' + (currentTheme === '' ? ' active' : '');
-      allBtn.textContent = 'Todos';
-      allBtn.addEventListener('click', () => {
-        currentTheme = '';
-        loadHinos();
-        updateThemeFilters();
-      });
-      container.appendChild(allBtn);
-
-      // Botões de temas
-      themes.forEach(theme => {
-        const btn = document.createElement('button');
-        btn.className = 'theme-btn' + (currentTheme === theme ? ' active' : '');
-        btn.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
-        btn.addEventListener('click', () => {
-          currentTheme = theme;
-          loadHinos();
-          updateThemeFilters();
-        });
-        container.appendChild(btn);
-      });
-    }
-
-    function renderHinos(hinos) {
-      const container = document.getElementById('hinosContainer');
-      container.innerHTML = '';
-
-      if (hinos.length === 0) {
-        container.innerHTML = '<div class="loading">Nenhum hino encontrado.</div>';
-        return;
-      }
-
-      hinos.forEach(hino => {
-        const card = document.createElement('div');
-        card.className = 'hymn-card';
-        
-        const isFav = favorites.includes(hino.numero);
-        
-        card.innerHTML = `
-          <div class="hymn-title">
-            <span>${hino.numero} - ${hino.titulo}</span>
-            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(${hino.numero})">
-              ${isFav ? '❤️' : '🤍'}
-            </button>
-          </div>
-          <div class="hymn-lyrics">${hino.letra}</div>
-        `;
-        
-        container.appendChild(card);
-      });
-    }
-
-    function searchHinos(term) {
-      if (!term.trim()) {
-        loadHinos();
-        return;
-      }
-
-      const searchTerm = term.toLowerCase();
-      let hinosToSearch = currentHinario === 'todos' ? allHinos : hinosData[currentHinario] || [];
-      
-      const results = hinosToSearch.filter(hino => {
-        return hino.numero.toString().includes(searchTerm) ||
-               hino.titulo.toLowerCase().includes(searchTerm) ||
-               hino.letra.toLowerCase().includes(searchTerm);
-      });
-
-      renderHinos(results);
-    }
-
-    function toggleFavorite(numero) {
-      const index = favorites.indexOf(numero);
-      if (index > -1) {
-        favorites.splice(index, 1);
-      } else {
-        favorites.push(numero);
-      }
-      
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      
-      // Atualizar visualização
-      if (currentSection === 'hinos') {
-        loadHinos();
-      } else if (currentSection === 'favoritos') {
-        loadFavorites();
-      }
-    }
-
-    function loadFavorites() {
-      const favHinos = allHinos.filter(h => favorites.includes(h.numero));
-      const container = document.getElementById('favoritosContainer');
-      
-      if (favHinos.length === 0) {
-        container.innerHTML = '<div class="loading">Você ainda não tem hinos favoritos.<br>❤️ Adicione alguns hinos aos favoritos para encontrá-los aqui!</div>';
-        return;
-      }
-
-      container.innerHTML = '';
-      favHinos.forEach(hino => {
-        const card = document.createElement('div');
-        card.className = 'hymn-card';
-        card.innerHTML = `
-          <div class="hymn-title">
-            <span>${hino.numero} - ${hino.titulo}</span>
-            <button class="favorite-btn active" onclick="toggleFavorite(${hino.numero})">❤️</button>
-          </div>
-          <div class="hymn-lyrics">${hino.letra}</div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // Funcionalidades da Bíblia
-    function setupBible() {
-      updateBibleBooks();
-    }
-
-    function updateBibleBooks() {
-      const language = document.getElementById('languageSelect').value;
-      const bookSelect = document.getElementById('bookSelect');
-      const versionSelect = document.getElementById('versionSelect');
-      
-      // Atualizar versões baseado no idioma
-      versionSelect.innerHTML = '';
-      if (language === 'pt') {
-        versionSelect.innerHTML = `
-          <option value="almeida">Almeida Corrigida Fiel</option>
-          <option value="nvi">Nova Versão Internacional</option>
-          <option value="ntlh">Nova Tradução na Linguagem de Hoje</option>
-        `;
-      } else {
-        versionSelect.innerHTML = `
-          <option value="rvr1960">Reina-Valera 1960</option>
-          <option value="nvi-es">Nueva Versión Internacional</option>
-          <option value="lbla">La Biblia de las Américas</option>
-        `;
-      }
-      
-      // Atualizar livros
-      bookSelect.innerHTML = '<option value="">Selecione um livro...</option>';
-      bibleBooks[language].forEach(book => {
-        const option = document.createElement('option');
-        option.value = book.abbr;
-        option.textContent = book.name;
-        option.dataset.chapters = book.chapters;
-        bookSelect.appendChild(option);
-      });
-      
-      // Limpar capítulos
-      document.getElementById('chapterSelect').innerHTML = '<option value="">Selecione um capítulo...</option>';
-    }
-
-    function updateChapters() {
-      const bookSelect = document.getElementById('bookSelect');
-      const chapterSelect = document.getElementById('chapterSelect');
-      const selectedOption = bookSelect.options[bookSelect.selectedIndex];
-      
-      chapterSelect.innerHTML = '<option value="">Selecione um capítulo...</option>';
-      
-      if (selectedOption && selectedOption.dataset.chapters) {
-        const chapters = parseInt(selectedOption.dataset.chapters);
-        for (let i = 1; i <= chapters; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.textContent = `Capítulo ${i}`;
-          chapterSelect.appendChild(option);
-        }
-      }
-    }
-
-    function loadChapter() {
-      const book = document.getElementById('bookSelect').value;
-      const chapter = document.getElementById('chapterSelect').value;
-      const language = document.getElementById('languageSelect').value;
-      
-      if (!book || !chapter) return;
-      
-      // Simulação de carregamento de capítulo
-      const content = document.getElementById('bibleContent');
-      content.innerHTML = '<div class="loading">Carregando capítulo...</div>';
-      
-      // Simular API call
-      setTimeout(() => {
-        const sampleVerses = generateSampleVerses(book, chapter, language);
-        content.innerHTML = sampleVerses;
-      }, 1000);
-    }
-
-    function generateSampleVerses(book, chapter, language) {
-      const verses = [];
-      const bookNames = {
-        'jo': language === 'pt' ? 'João' : 'Juan',
-        'sl': language === 'pt' ? 'Salmos' : 'Salmos',
-        'gn': language === 'pt' ? 'Gênesis' : 'Génesis'
-      };
-      
-      const sampleTexts = {
-        pt: [
-          "No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus.",
-          "Todas as coisas foram feitas por ele, e sem ele nada do que foi feito se fez.",
-          "Nele estava a vida, e a vida era a luz dos homens."
-        ],
-        es: [
-          "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.",
-          "Todas las cosas por él fueron hechas, y sin él nada de lo que ha sido hecho, fue hecho.",
-          
+    <input type="text" placeholder="Buscar por título ou número..." / style="width: 80%; max-width: 600px;">
+  <script src="script.js"></script>
+</div>
+</body>
+</html>
